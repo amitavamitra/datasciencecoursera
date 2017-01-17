@@ -1,0 +1,13 @@
+makeCacheMatrix <- function(x = matrix()) {
+        local_m <- NULL                                		##Initialization of m to NULL ensures that it doesnt collect any garbage when next function is run. 
+        set <- function(y) {                                    
+                cache_x <<- y                                  
+                cache_m <<- NULL                                ## Initialization of cache_m to NULL ensures that it doesnt collect any garbage when next function is run.        
+        }
+        get <- function() cache_x                               ## Function to get/return the matrix passed in the command line call to '$set
+        set_cache_m <- function(local_m) cache_m <<- local_m    ## Function to set the value of cache_m in cache to the value of local_m passed in the call to '$set_cache_m.        
+        get_cache_m <- function() cache_m                       ## Function to retrieve value of cache_m from cache and return cache_m 
+        list(set = set, get = get,
+             set_cache_m = set_cache_m,
+             get_cache_m = get_cache_m)
+}
