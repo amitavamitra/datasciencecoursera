@@ -1,3 +1,5 @@
+## Done following the makevector() function as in module.
+
 makeCacheMatrix <- function(x = matrix()) {
         local_m <- NULL                                		##Initialization of m to NULL ensures that it doesnt collect any garbage when next function is run. 
         set <- function(y) {                                    
@@ -10,4 +12,17 @@ makeCacheMatrix <- function(x = matrix()) {
         list(set = set, get = get,
              set_cache_m = set_cache_m,
              get_cache_m = get_cache_m)
+}
+
+## Done following the cacheclean() function as in module.
+cacheSolve <- function(x) {                     
+        local_m<- x$get_cache_m()               ## Get the value for m in the cache environment  in a local m.
+        if(!is.null(local_m)) {                 ##  Ensure m is NOT NULL
+                message("getting cached data")  
+                return(local_m)
+        }                                       ## If we get to this line, m was NULL
+        startingmatrix <- x$get()               ## Call the nested function x$get in makeCacheMatrix to obtain the UNinverted matrix with which to start, and assign it to startingmatrix.                         
+        endingmatrix <- solve(startingmatrix)   ## Used solve() to invert the startingmatrix.  Assigned the result to endingmatrix.
+        x$set_cache_m(endingmatrix)             ## Call nested function x$set_cache_m() in makeCacheMatrix to set m in the cache environment non-NULL inverted result in endingmatrix
+        endingmatrix                            ## Evaluate endingmatrix so as to return it to caller/console if cache_m is non NULL.
 }
